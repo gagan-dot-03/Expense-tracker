@@ -64,31 +64,3 @@ Tracks operational transaction entries bound to specified users and categories.
 3. Change paths straight into your extracted project target path location directory:
    ```cmd
    cd C:\Users\HP\Documents\ExpenseTracker
-
-## Application Flow Map
-
-[ START PROGRAM ]
-       │
-       ▼
-┌──────────────────────────────┐
-│     1. AUTHENTICATION MENU   │◄─────────┐ (If user logs out)
-├──────────────────────────────┤          │
-│  1. Login Existing Account   │          │
-│  2. Register New Account     │          │
-│  3. Exit System              │          │
-└──────────────┬───────────────┘          │
-               │                          │
-               │ (On Successful Login)    │
-               ▼                          │
-┌──────────────────────────────────────┐  │
-│          2. USER DASHBOARD           │  │
-├──────────────────────────────────────┤  │
-│  1. Record New Expense               │  │
-│     └───► Spawns 3. CATEGORY SUB-MENU│  │
-│  2. Monthly Summary & Budget Check   │  │
-│  3. Filter History by Category       │  │
-│  4. Filter History by Date Range     │  │
-│  5. Run Analytics Insights (AVG/SUM) │  │
-│  6. Export Ledger to CSV             │  │
-│  7. Logout Account ──────────────────┴──┘
-└──────────────────────────────────────┘
