@@ -3,32 +3,92 @@
 ## Project Overview
 This is a terminal-based, menu-driven Expense Tracker built in Python. It allows users to log daily expenses and view their spending history. This project was developed as a mini-project submission for the Qubitedge Internship.
 
-## 🚀 Features
+# Relational Personal Expense Tracker (with Dynamic Budget Analysis)
 
-* **Menu-Driven Interface:** Entirely operational inside a standard command line interface (CLI).
-* **Dedicated Category Selection:** Features a standalone sub-menu for choosing preset categories to eliminate operational typos and formatting errors.
-* **Smart Fallbacks:** Automatically defaults to the local system date if the user skips explicit manual date entries.
-* **Persistent Local Engine:** Powered by SQLite to keep records secure and intact between runtime restarts without third-party platform dependencies.
+An advanced, terminal-based menu-driven Python application constructed to log, categorize, monitor, and analyze financial transactions. Powered by an SQLite relational database engine, this application operates natively in Indian Rupees (Rs.) and offers real-time budget forecasting alongside financial report exporting capabilities.
 
 ---
 
-## 📊 Database Schema
+## Key Features
 
-The system initializes a lightweight SQLite database container file (`expense_tracker.db`) containing an `expenses` structured table layout:
-
-| Field Name  | Data Type | Attributes                | Description                                |
-| :---        | :---      | :---                      | :---                                       |
-| `id`        | INTEGER   | PRIMARY KEY AUTOINCREMENT | Unique sequence flag generated per item.   |
-| `date`      | TEXT      | NOT NULL                  | Event timing stamps using `YYYY-MM-DD`.     |
-| `category`  | TEXT      | NOT NULL                  | Predetermined group label from sub-menu.   |
-| `amount`    | REAL      | NOT NULL                  | Monetary numeric quantity.                  |
-| `description`| TEXT     | DEFAULT 'N/A'             | Context details or reference pointers.     |
+* **Multi-User Management:** Supports localized user registration and individual profile logins with custom financial threshold targets.
+* **Three-Table Relational Schema:** Implements professional data normalization patterns, securing entity relationships via explicit Foreign Keys.
+* **Dynamic Before/After Budget Analysis:** Calculates and displays active monthly spending balances *before* an expense entry is added and predicts the remaining balance *after* deduction, triggering system warnings if limits are breached.
+* **Advanced SQL Analytics Engine:** Runs complex grouping query logic utilizing relational table joins and SQL aggregate functions (`SUM()`, `AVG()`, and `GROUP BY`).
+* **Multi-Criteria Data Filtering:** Allows instantaneous operational history retrieval indexed by custom category tags or precise date-range intervals (`YYYY-MM-DD`).
+* **Data Portability Processing:** Compiles personalized financial tables into cross-platform standalone `.csv` spreadsheet files automatically.
 
 ---
 
-## Setup and Execution Instructions
-1. Ensure Python 3.x is installed on your system.
-2. Clone this repository to your local machine.
-3. Open a terminal and navigate to the project directory.
-4. Run the application using the command: `python main.py`
-5. Follow the on-screen menu to add or view expenses.
+## 📊 Database Schema Architecture
+
+The localized engine manages data inside an isolated repository container (`expense_tracker.db`) mapped out across three interconnected relational tables:
+
+### 1. `users` Table
+Handles user profile initialization and specific budget configurations.
+| Field Name       | Data Type | Attributes                | Description                                     |
+| :---             | :---      | :---                      | :---                                            |
+| `id`             | INTEGER   | PRIMARY KEY AUTOINCREMENT | Unique identifier sequence for each user account.|
+| `username`       | TEXT      | UNIQUE NOT NULL           | Alpha-numeric login moniker identifier.         |
+| `monthly_budget` | REAL      | DEFAULT 0.0               | Active financial cap ceiling limit (Rs.).       |
+
+### 2. `categories` Table
+Stores preset transaction groupings to keep indices uniform.
+| Field Name | Data Type | Attributes                | Description                                       |
+| :---       | :---      | :---                      | :---                                              |
+| `id`       | INTEGER   | PRIMARY KEY AUTOINCREMENT | Unique category relationship row pointer key.     |
+| `name`     | TEXT      | UNIQUE NOT NULL           | Label descriptors (`Food`, `Transport`, etc.).    |
+
+### 3. `expenses` Table
+Tracks operational transaction entries bound to specified users and categories.
+| Field Name    | Data Type | Attributes                | Description                                       |
+| :---          | :---      | :---                      | :---                                              |
+| `id`          | INTEGER   | PRIMARY KEY AUTOINCREMENT | Unique operational reference ledger log token.    |
+| `user_id`     | INTEGER   | FOREIGN KEY NOT NULL      | References `id` inside the `users` table.         |
+| `category_id` | INTEGER   | FOREIGN KEY NOT NULL      | References `id` inside the `categories` table.    |
+| `amount`      | REAL      | NOT NULL                  | Transaction monetary metric numeric size (Rs.).   |
+| `date`        | TEXT      | NOT NULL                  | Standardized ISO timestamp entry (`YYYY-MM-DD`).   |
+| `description` | TEXT      | DEFAULT 'N/A'             | Context reference notations or brief memos.       |
+
+---
+
+## Installation & Local Execution Protocols
+
+### System Requirements
+* Windows 10 / 11 Operating System.
+* Python 3.x runtime package installation (configured via a local Python environment setup or Anaconda distribution terminal console).
+
+### Execution Steps
+1. Download or clone this workspace folder containing `main.py` onto your local storage system.
+2. Launch your command window workspace shell interface (**Command Prompt** or **Anaconda Prompt**).
+3. Change paths straight into your extracted project target path location directory:
+   ```cmd
+   cd C:\Users\HP\Documents\ExpenseTracker
+
+## Application Flow Map
+
+[ START PROGRAM ]
+       │
+       ▼
+┌──────────────────────────────┐
+│     1. AUTHENTICATION MENU   │◄─────────┐ (If user logs out)
+├──────────────────────────────┤          │
+│  1. Login Existing Account   │          │
+│  2. Register New Account     │          │
+│  3. Exit System              │          │
+└──────────────┬───────────────┘          │
+               │                          │
+               │ (On Successful Login)    │
+               ▼                          │
+┌──────────────────────────────────────┐  │
+│          2. USER DASHBOARD           │  │
+├──────────────────────────────────────┤  │
+│  1. Record New Expense               │  │
+│     └───► Spawns 3. CATEGORY SUB-MENU│  │
+│  2. Monthly Summary & Budget Check   │  │
+│  3. Filter History by Category       │  │
+│  4. Filter History by Date Range     │  │
+│  5. Run Analytics Insights (AVG/SUM) │  │
+│  6. Export Ledger to CSV             │  │
+│  7. Logout Account ──────────────────┴──┘
+└──────────────────────────────────────┘
